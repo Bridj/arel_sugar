@@ -4,12 +4,14 @@ rvm:
   - 2.0
   - 2.1
   - 2.2
+  - 2.4
   - rbx-3
 
 gemfile:
   - gemfiles/activerecord_4_2.gemfile
   - gemfiles/activerecord_5_0.gemfile
   - gemfiles/activerecord_5_1.gemfile
+  - gemfiles/activerecord_5_2.gemfile
   - gemfiles/activerecord_edge.gemfile
 
 env:
@@ -18,9 +20,6 @@ env:
   - DB=sqlite3
 
 sudo: false
-
-before_install:
-  - rvm get master
 
 before_script:
   - sh -c "if [ '$DB' = 'postgresql' ]; then psql -c 'DROP DATABASE IF EXISTS sexy_scopes_spec;' -U postgres; fi"
@@ -39,14 +38,14 @@ matrix:
     - rvm: 2.0
       gemfile: gemfiles/activerecord_5_1.gemfile
     - rvm: 2.0
+      gemfile: gemfiles/activerecord_5_2.gemfile
+    - rvm: 2.0
       gemfile: gemfiles/activerecord_edge.gemfile
     - rvm: 2.1
       gemfile: gemfiles/activerecord_5_0.gemfile
     - rvm: 2.1
       gemfile: gemfiles/activerecord_5_1.gemfile
     - rvm: 2.1
+      gemfile: gemfiles/activerecord_5_2.gemfile
+    - rvm: 2.1
       gemfile: gemfiles/activerecord_edge.gemfile
-
-branches:
-  only:
-    - master
