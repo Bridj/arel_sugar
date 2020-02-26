@@ -1,4 +1,7 @@
-require 'spec_helper'
+# frozen_string_literal: true
+
+require "spec_helper"
+require "pry"
 
 describe SexyScopes::ActiveRecord::DynamicMethods do
   before do
@@ -9,7 +12,7 @@ describe SexyScopes::ActiveRecord::DynamicMethods do
       t.integer :score
     end
 
-    class ::TempUser < ActiveRecord::Base
+    class TempUser < ActiveRecord::Base
       # Deliberately defining a method whose name is a column
       # This shouldn't be overwriten by the system
       def self.foo
@@ -24,7 +27,7 @@ describe SexyScopes::ActiveRecord::DynamicMethods do
   end
 
   it "should delegate to `attribute` when the method name is the name of an existing column" do
-    expect(TempUser).to receive(:attribute).with('username').once.and_return(:ok)
+    expect(TempUser).to receive(:arel_attr).with("username").once.and_return(:ok)
     expect(TempUser.username).to eq :ok
   end
 

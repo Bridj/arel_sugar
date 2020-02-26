@@ -127,14 +127,14 @@ How does it work ?
 
 SexyScopes is essentially a wrapper around [Arel](https://github.com/rails/arel#readme) attribute nodes.
 
-It introduces a `ActiveRecord::Base.attribute(name)` class method returning an `Arel::Attribute` object, which
+It introduces a `ActiveRecord::Base.arel_attr(name)` class method returning an `Arel::Attribute` object, which
 represent a table column with the given name, that is extended to support Ruby operators.
 
 For convenience, SexyScopes dynamically resolves methods whose name is an existing table column: i.e.
-`Product.price` is a shortcut for `Product.attribute(:price)`.
+`Product.price` is a shortcut for `Product.arel_attr(:price)`.
 
 Please note that this mechanism won't override any of the existing `ActiveRecord::Base` class methods,
-so if you have a column named `name` for instance, you'll have to use `Product.attribute(:name)` instead of
+so if you have a column named `name` for instance, you'll have to use `Product.arel_attr(:name)` instead of
 `Product.name` (which would be in this case the class actual name, `"Product"`).
 
 Here is a complete list of operators, and their `Arel::Attribute` equivalents:
@@ -262,7 +262,7 @@ Circle.where { area < 42 }
 # SQL: SELECT `circles`.* FROM `circles`  WHERE (3.141592653589793 * `circles`.`radius` * `circles`.`radius` < 42)
 
 class Product < ActiveRecord::Base
-  predicate = (attribute(:name) == nil) & ~category.in(%w( shoes shirts ))
+  predicate = (arel_attr(:name) == nil) & ~category.in(%w( shoes shirts ))
   puts predicate.to_sql
   # `products`.`name` IS NULL AND NOT (`products`.`category` IN ('shoes', 'shirts'))
 

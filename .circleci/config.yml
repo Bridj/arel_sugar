@@ -1,0 +1,47 @@
+version: 2
+
+jobs:
+  test:
+    working_directory: ~/Bridj/sexy_scopes
+    parallelism: 1
+    shell: /bin/bash --login
+    environment:
+      BUNDLER_VERSION: 2.0.1
+    docker:
+      - image: circleci/ruby:2.6.5-buster
+    steps:
+      - checkout
+      - run:
+          name: Install apt dependencies
+          command: sudo apt-get update && sudo apt-get install sqlite3
+      - restore_cache:
+          name: Restore bundler cache
+          keys:
+            - bundle-cache-v4-{{ checksum "sexy_scopes.gemspec" }}
+      - run:
+          name: Install bundler dependencies
+          command: |
+            gem install bundler -v $BUNDLER_VERSION
+            bundle check || bundle install --path=vendor/bundle --jobs=4 --retry=3
+            bundle clean
+      - save_cache:
+          name: Save bundler cache
+          key: bundle-cache-v4-{{ checksum "sexy_scopes.gemspec" }}
+          paths:
+            - ~/.bundle
+            - vendor/bundle
+      - run:
+          name: Rubocop
+          command: bundle exec rubocop
+      - run:
+          name: RSpec
+          command: |
+            bundle exec rspec \
+                --seed $(git rev-parse HEAD | tr -d 'a-z' | cut -b 1-5 | sed 's/^0*//') \
+                spec
+
+workflows:
+  version: 2
+  workflow-integration:
+    jobs:
+      - test

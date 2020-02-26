@@ -1,70 +1,69 @@
-require 'spec_helper'
+# frozen_string_literal: true
+
+require "spec_helper"
 
 describe SexyScopes::Arel::Predications do
-  before do
-    @attribute = User.attribute(:score)
-  end
+  let(:attribute) { User.arel_attr attr_name }
+  let(:attr_name) { :score }
 
   METHODS = {
-    # Arel method   => [ Ruby operator, SQL operator ]
-    :eq             => [ '==',  '= %s'        ],
-    :in             => [ nil,   'IN (%s)'     ],
-    :matches        => [ '=~',  'LIKE %s'     ],
-    :does_not_match => [ '!~',  'NOT LIKE %s' ],
-    :gteq           =>   '>=',
-    :gt             =>   '>',
-    :lt             =>   '<',
-    :lteq           =>   '<=',
-    :not_eq         =>   '!='
-  }
+    # Arel method:  [ Ruby op, SQL op     ]
+    eq:             [ "==", "= %s"        ],
+    in:             [ nil,  "IN (%s)"     ],
+    matches:        [ "=~", "LIKE %s"     ],
+    does_not_match: [ "!~", "NOT LIKE %s" ],
+    gteq:             ">=",
+    gt:               ">",
+    lt:               "<",
+    lteq:             "<=",
+    not_eq:           "!="
+  }.freeze
 
   METHODS.each do |method, (operator, sql_operator)|
     sql_operator ||= "#{operator} %s"
 
     describe "the method `#{method}`" do
-      subject { @attribute.send(method, 42) }
+      subject { attribute.send(method, 42) }
 
       it_behaves_like "a predicate method"
 
-      it { is_expected.to convert_to_sql %{"users"."score" #{sql_operator % 42}} }
+      it { is_expected.to convert_to_sql %("users"."score" #{sql_operator % 42}) }
 
       if operator
         it "is aliased as `#{operator}`" do
-          expect(described_class.instance_method(operator)).to eq described_class.instance_method(method)
+          expect(described_class.instance_method(operator)).to eq(
+            described_class.instance_method(method)
+          )
         end
       end
     end
   end
 
   context "LIKE operator" do
-    before do
-      @attribute = User.attribute(:username)
-    end
+    let(:attr_name) { :username }
 
     describe "the method `matches`" do
-      subject { @attribute.matches('bob') }
+      subject { attribute.matches("bob") }
 
       it_behaves_like "a predicate method"
 
-      it { is_expected.to convert_to_sql %{"users"."username" LIKE 'bob'} }
+      it { is_expected.to convert_to_sql %("users"."username" LIKE 'bob') }
     end
 
     describe "the method `does_not_match`" do
-      subject { @attribute.does_not_match('bob') }
+      subject { attribute.does_not_match("bob") }
 
       it_behaves_like "a predicate method"
 
-      it { is_expected.to convert_to_sql %{"users"."username" NOT LIKE 'bob'} }
+      it { is_expected.to convert_to_sql %("users"."username" NOT LIKE 'bob') }
     end
   end
 
   context "Regular Expressions" do
-    before do
-      @attribute = User.attribute(:username)
-    end
+    let(:attr_name) { :username }
 
     describe "the method `matches_regexp`" do
-      subject { @attribute.matches_regexp(/foo/) }
+      subject { attribute.matches_regexp(/foo/) }
 
       it_behaves_like "a predicate method"
 
@@ -72,7 +71,7 @@ describe SexyScopes::Arel::Predications do
     end
 
     describe "the method `does_not_match_regexp`" do
-      subject { @attribute.does_not_match_regexp(/foo/) }
+      subject { attribute.does_not_match_regexp(/foo/) }
 
       it_behaves_like "a predicate method"
 
@@ -85,15 +84,15 @@ describe SexyScopes::Arel::Predications do
 
     describe "the operator `=~` called with a Regexp" do
       it "should delegate to the method `matches_regexp`" do
-        expect(@attribute).to receive(:matches_regexp).once.with(/foo/).and_return(:ok)
-        expect(@attribute =~ /foo/).to eq :ok
+        expect(attribute).to receive(:matches_regexp).once.with(/foo/).and_return(:ok)
+        expect(attribute =~ /foo/).to eq :ok
       end
     end
 
     describe "the operator `!~` called with a Regexp" do
       it "should delegate to the method `matches_regexp`" do
-        expect(@attribute).to receive(:does_not_match_regexp).once.with(/foo/).and_return(:ok)
-        expect(@attribute !~ /foo/).to eq :ok
+        expect(attribute).to receive(:does_not_match_regexp).once.with(/foo/).and_return(:ok)
+        expect(attribute !~ /foo/).to eq :ok
       end
     end
   end

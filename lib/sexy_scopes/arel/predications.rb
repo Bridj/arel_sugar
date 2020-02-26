@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SexyScopes
   module Arel
     module Predications
@@ -11,7 +13,7 @@ module SexyScopes
       end
 
       def matches(other, *)
-        if Regexp === other
+        if other.is_a? Regexp
           matches_regexp(other)
         else
           SexyScopes.extend_predicate(super)
@@ -20,7 +22,7 @@ module SexyScopes
       alias =~ matches
 
       def does_not_match(other, *)
-        if Regexp === other
+        if other.is_a? Regexp
           does_not_match_regexp(other)
         else
           SexyScopes.extend_predicate(super)
@@ -64,4 +66,3 @@ module SexyScopes
     end
   end
 end
-

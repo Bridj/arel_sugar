@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 SexyScopesSpec.connect
 
 ActiveRecord::Schema.verbose = false

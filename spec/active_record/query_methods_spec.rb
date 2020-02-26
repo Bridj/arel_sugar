@@ -1,4 +1,6 @@
-require 'spec_helper'
+# frozen_string_literal: true
+
+require "spec_helper"
 
 describe SexyScopes::ActiveRecord::QueryMethods do
   describe ".where(&block)" do
@@ -11,12 +13,14 @@ describe SexyScopes::ActiveRecord::QueryMethods do
 
       it "should use the returned expression as conditions" do
         relation = subject.where { score == 5 }
-        expect(relation).to convert_to_sql %{SELECT "users".* FROM "users" WHERE "users"."score" = 5}
+        expect(relation).to convert_to_sql(
+          %(SELECT "users".* FROM "users" WHERE "users"."score" = 5)
+        )
       end
     end
 
     context "sent to an ActiveRecord::Relation" do
-      subject { User.select('1') }
+      subject { User.select("1") }
 
       it "should execute the block in the context of the relation" do
         expect_block_to_be_executed_in_context_or_with_argument
@@ -24,13 +28,15 @@ describe SexyScopes::ActiveRecord::QueryMethods do
 
       it "should use the returned expression as conditions" do
         relation = subject.where { score == 5 }
-        expect(relation).to convert_to_sql %{SELECT 1 FROM "users" WHERE "users"."score" = 5}
+        expect(relation).to convert_to_sql(
+          %(SELECT 1 FROM "users" WHERE "users"."score" = 5)
+        )
       end
     end
 
     context "sent to an association proxy" do
       before do
-        @bob = User.create(username: 'bob')
+        @bob = User.create(username: "bob")
       end
 
       subject { @bob.messages }
@@ -40,7 +46,7 @@ describe SexyScopes::ActiveRecord::QueryMethods do
       end
 
       it "should use the returned expression as conditions" do
-        relation = subject.where { body =~ '%alice%' }
+        relation = subject.where { body =~ "%alice%" }
         if SexyScopes.arel_9?
           expect(relation).to convert_to_sql <<-SQL.strip
             SELECT "messages".* FROM "messages" WHERE "messages"."author_id" = #{@bob.id} AND "messages"."body" LIKE '%alice%'
@@ -56,7 +62,7 @@ describe SexyScopes::ActiveRecord::QueryMethods do
     context "called with both arguments and a block" do
       it "should raise an ArgumentError" do
         expect {
-          User.where(username: 'bob') { score == 5 }
+          User.where(username: "bob") { score == 5 }
         }.to raise_error ArgumentError, "You can't use both arguments and a block"
       end
     end
@@ -93,15 +99,19 @@ describe SexyScopes::ActiveRecord::QueryMethods do
       it "should use the returned expression as conditions" do
         relation = subject.where.not { score == 5 }
         if SexyScopes.arel_9?
-          expect(relation).to convert_to_sql %{SELECT "users".* FROM "users" WHERE NOT ("users"."score" = 5)}
+          expect(relation).to convert_to_sql(
+            %{SELECT "users".* FROM "users" WHERE NOT ("users"."score" = 5)}
+          )
         else
-          expect(relation).to convert_to_sql %{SELECT "users".* FROM "users" WHERE (NOT ("users"."score" = 5))}
+          expect(relation).to convert_to_sql(
+            %{SELECT "users".* FROM "users" WHERE (NOT ("users"."score" = 5))}
+          )
         end
       end
     end
 
     context "sent to an ActiveRecord::Relation" do
-      subject { User.select('1') }
+      subject { User.select("1") }
 
       it "should execute the block in the context of the relation" do
         expect_block_to_be_executed_in_context_or_with_argument
@@ -110,16 +120,20 @@ describe SexyScopes::ActiveRecord::QueryMethods do
       it "should use the returned expression as conditions" do
         relation = subject.where.not { score == 5 }
         if SexyScopes.arel_9?
-          expect(relation).to convert_to_sql %{SELECT 1 FROM "users" WHERE NOT ("users"."score" = 5)}
+          expect(relation).to convert_to_sql(
+            %{SELECT 1 FROM "users" WHERE NOT ("users"."score" = 5)}
+          )
         else
-          expect(relation).to convert_to_sql %{SELECT 1 FROM "users" WHERE (NOT ("users"."score" = 5))}
+          expect(relation).to convert_to_sql(
+            %{SELECT 1 FROM "users" WHERE (NOT ("users"."score" = 5))}
+          )
         end
       end
     end
 
     context "sent to an association proxy" do
       before do
-        @bob = User.create(username: 'bob')
+        @bob = User.create(username: "bob")
       end
 
       subject { @bob.messages }
@@ -129,7 +143,7 @@ describe SexyScopes::ActiveRecord::QueryMethods do
       end
 
       it "should use the returned expression as conditions" do
-        relation = subject.where.not { body =~ '%alice%' }
+        relation = subject.where.not { body =~ "%alice%" }
         if SexyScopes.arel_9?
           expect(relation).to convert_to_sql <<-SQL.strip
             SELECT "messages".* FROM "messages" WHERE "messages"."author_id" = #{@bob.id} AND NOT ("messages"."body" LIKE '%alice%')
@@ -145,7 +159,7 @@ describe SexyScopes::ActiveRecord::QueryMethods do
     context "called with both arguments and a block" do
       it "should raise an ArgumentError" do
         expect {
-          User.where.not(username: 'bob') { score == 5 }
+          User.where.not(username: "bob") { score == 5 }
         }.to raise_error ArgumentError, "You can't use both arguments and a block"
       end
     end

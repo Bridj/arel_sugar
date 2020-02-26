@@ -1,4 +1,6 @@
-require 'arel/visitors'
+# frozen_string_literal: true
+
+require "arel/visitors"
 
 module Arel
   module Visitors
@@ -20,7 +22,7 @@ module Arel
         right = SexyScopes.quote(regexp.source)
         right = Arel::Nodes::Bin.new(right) unless regexp.casefold?
         visit o.left, collector
-        collector << ' REGEXP '
+        collector << " REGEXP "
         visit right, collector
       end
     end
@@ -30,7 +32,7 @@ module Arel
 
       def visit_SexyScopes_Arel_Nodes_RegexpMatches(o, collector)
         regexp = o.right
-        operator = regexp.casefold? ? '~*' : '~'
+        operator = regexp.casefold? ? "~*" : "~"
         right = SexyScopes.quote(regexp.source)
         visit o.left, collector
         collector << SPACE << operator << SPACE
@@ -43,15 +45,15 @@ module Arel
 
       def visit_SexyScopes_Arel_Nodes_RegexpMatches(o, collector)
         regexp = o.right
-        flags = regexp.casefold? ? 'i' : 'c'
-        flags << 'm' if regexp.options & Regexp::MULTILINE == Regexp::MULTILINE
-        collector << 'REGEXP_LIKE('
+        flags = regexp.casefold? ? "i" : "c"
+        flags << "m" if regexp.options & Regexp::MULTILINE == Regexp::MULTILINE
+        collector << "REGEXP_LIKE("
         visit o.left, collector
         collector << COMMA
         visit regexp.source, collector
         collector << COMMA
         visit flags, collector
-        collector << ')'
+        collector << ")"
       end
     end
   end
