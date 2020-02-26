@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SexyScopes
   module ActiveRecord
     module QueryMethods
@@ -9,8 +11,8 @@ module SexyScopes
       #   User.where(User.username =~ 'bob%')
       #
       # The block is evaluated in the context of the current relation, and the resulting expression
-      # is used as an argument to `where`, thus allowing a cleaner syntax where you don't have to write
-      # the receiver of the method explicitely, in this case: `username` vs `User.username`
+      # is used as an argument to `where`, thus allowing a cleaner syntax where you don't have to
+      # write the receiver of the method explicitly, in this case: `username` vs `User.username`
       #
       # This form can also be used with relations:
       #
@@ -35,6 +37,7 @@ module SexyScopes
 
       def sexy_scopes_build_conditions_from_block(args, block)
         raise ArgumentError, "You can't use both arguments and a block" if args.any?
+
         if block.arity.zero?
           instance_eval(&block)
         else

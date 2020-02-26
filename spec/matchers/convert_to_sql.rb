@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 RSpec::Matchers.define :convert_to_sql do |expected|
   case SexyScopesSpec.database_system
-  when 'mysql'
-    expected = expected.gsub('"', '`')
-  when 'postgresql'
-    expected = expected.gsub('LIKE', 'ILIKE')
+  when "mysql"
+    expected = expected.gsub('"', "`")
+  when "postgresql"
+    expected = expected.gsub("LIKE", "ILIKE")
   end
 
   match do |actual|
@@ -25,6 +27,6 @@ RSpec::Matchers.define :convert_to_sql do |expected|
   # Arel < 6 seems to inserts an additionnal (harmless) space before the WHERE clause.
   # We ensure this space is removed to avoid false positives.
   def normalize_sql(sql)
-    sql.gsub('  WHERE ', ' WHERE ')
+    sql.gsub("  WHERE ", " WHERE ")
   end
 end

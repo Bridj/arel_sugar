@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SexyScopes
   module Arel
     module Nodes

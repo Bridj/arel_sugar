@@ -1,0 +1,68 @@
+AllCops:
+  TargetRubyVersion: 2.3
+
+Layout/HashAlignment:
+  Exclude:
+    - spec/arel/predications_spec.rb
+
+Layout/LineLength:
+  Max: 100
+  Exclude:
+    - sexy_scopes.gemspec
+
+Layout/SpaceInsideArrayLiteralBrackets:
+  Exclude:
+    - spec/arel/predications_spec.rb
+
+Lint/NonDeterministicRequireOrder:
+  Exclude:
+    - spec/spec_helper.rb
+
+Metrics/AbcSize:
+  Exclude:
+    - spec/active_record/query_methods_spec.rb
+
+Metrics/BlockLength:
+  Enabled: false
+
+Metrics/MethodLength:
+  ExcludedMethods: expect_block_to_be_executed_in_context_or_with_argument
+
+Naming/MethodName:
+  Exclude:
+    - lib/arel/visitors_extensions.rb
+
+Naming/MethodParameterName:
+  Exclude:
+    - lib/arel/visitors_extensions.rb
+
+Naming/VariableNumber:
+  Exclude:
+    - lib/sexy_scopes.rb
+
+Style/BlockDelimiters:
+  IgnoredMethods: expect, where, not
+
+Style/DateTime:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/HashEachMethods:
+  Enabled: true
+
+Style/HashTransformKeys:
+  Enabled: true
+
+Style/HashTransformValues:
+  Enabled: true
+
+Style/Lambda:
+  EnforcedStyle: literal
+
+Style/ModuleFunction:
+  Enabled: false
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes

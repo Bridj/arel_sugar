@@ -1,14 +1,16 @@
+# frozen_string_literal: true
+
 module SexyScopesSpec
   extend self
 
-  DEFAULT_DATABASE_SYSTEM = 'sqlite3'
+  DEFAULT_DATABASE_SYSTEM = "sqlite3"
 
   def connection_config
     config[database_system]
   end
 
   def database_system
-    ENV['DB'] || DEFAULT_DATABASE_SYSTEM
+    ENV["DB"] || DEFAULT_DATABASE_SYSTEM
   end
 
   def connect

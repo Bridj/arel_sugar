@@ -1,20 +1,20 @@
-require 'spec_helper'
+# frozen_string_literal: true
+
+require "spec_helper"
 
 describe SexyScopes::Arel::Math do
-  before do
-    @attribute = User.attribute(:score)
-  end
+  let(:attribute) { User.arel_attr :score }
 
   describe "the method `*`" do
-    subject { @attribute * 42 }
+    subject { attribute * 42 }
 
     it_behaves_like "an expression method"
 
-    it { is_expected.to convert_to_sql %{"users"."score" * 42} }
+    it { is_expected.to convert_to_sql %("users"."score" * 42) }
   end
 
   describe "the method `+`" do
-    subject { @attribute + 42 }
+    subject { attribute + 42 }
 
     it_behaves_like "an expression method"
 
@@ -22,7 +22,7 @@ describe SexyScopes::Arel::Math do
   end
 
   describe "the method `-`" do
-    subject { @attribute - 42 }
+    subject { attribute - 42 }
 
     it_behaves_like "an expression method"
 
@@ -30,31 +30,31 @@ describe SexyScopes::Arel::Math do
   end
 
   describe "the method `/`" do
-    subject { @attribute / 42 }
+    subject { attribute / 42 }
 
     it_behaves_like "an expression method"
 
-    it { is_expected.to convert_to_sql %{"users"."score" / 42} }
+    it { is_expected.to convert_to_sql %("users"."score" / 42) }
   end
 
   describe "Ruby type coercion" do
-    subject { 42 / @attribute }
+    subject { 42 / attribute }
 
     it_behaves_like "an expression method"
 
-    it { is_expected.to convert_to_sql %{42 / "users"."score"} }
+    it { is_expected.to convert_to_sql %(42 / "users"."score") }
   end
 
-  if ::Arel::VERSION >= '6.0.0'
+  if ::Arel::VERSION >= "6.0.0"
     describe "SQL typecasting" do
-      [42.0, '42.0', BigDecimal.new('42.0')].each do |value|
+      [42.0, "42.0", BigDecimal("42.0")].each do |value|
         context value.class.name do
-          subject { @attribute * value }
+          subject { attribute * value }
 
           it_behaves_like "an expression method"
 
           it "should cast #{value.inspect} to column type (integer)" do
-            expect(subject).to convert_to_sql %{"users"."score" * 42}
+            expect(subject).to convert_to_sql %("users"."score" * 42)
           end
         end
       end

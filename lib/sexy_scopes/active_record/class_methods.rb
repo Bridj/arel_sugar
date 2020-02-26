@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module SexyScopes
   module ActiveRecord
     module ClassMethods
@@ -9,11 +11,10 @@ module SexyScopes
       # @note Please note that no exception is raised if no such column actually exists.
       #
       # @example
-      #   where attribute(:score) > 1000
+      #   where arel_attr(:score) > 1000
       #
-      def attribute(name)
-        attribute = arel_table[name]
-        SexyScopes.extend_expression(attribute)
+      def arel_attr(name)
+        SexyScopes.extend_expression(arel_table[name])
       end
 
       # Creates and extends an Arel <tt>SqlLiteral</tt> instance for the given <tt>expression</tt>,
@@ -30,7 +31,7 @@ module SexyScopes
           SexyScopes.extend_predicate(literal)
         end
       end
-      alias_method :sql, :sql_literal
+      alias sql sql_literal
     end
   end
 end
