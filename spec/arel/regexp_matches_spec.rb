@@ -2,13 +2,11 @@
 
 require "spec_helper"
 
-describe SexyScopes::Arel::Nodes::RegexpMatches do
-  before do
-    @attribute = User.arel_attr(:username)
-  end
+describe ArelSugar::Arel::Nodes::RegexpMatches do
+  let(:attribute) { User.arel_attr(:username) }
 
   context "case sensitive" do
-    subject { @attribute =~ /bob|alice/ }
+    subject { attribute =~ /bob|alice/ }
 
     db :postgresql do
       it { is_expected.to convert_to_sql %("users"."username" ~ 'bob|alice') }
@@ -24,7 +22,7 @@ describe SexyScopes::Arel::Nodes::RegexpMatches do
   end
 
   context "case insensitive" do
-    subject { @attribute =~ /bob|alice/i }
+    subject { attribute =~ /bob|alice/i }
 
     db :postgresql do
       it { is_expected.to convert_to_sql %("users"."username" ~* 'bob|alice') }

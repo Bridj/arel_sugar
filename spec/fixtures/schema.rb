@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-SexyScopesSpec.connect
+ArelSugarSpec.connect
 
 ActiveRecord::Schema.verbose = false
 ActiveRecord::Schema.define do

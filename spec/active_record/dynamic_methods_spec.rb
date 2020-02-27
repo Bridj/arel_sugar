@@ -3,7 +3,7 @@
 require "spec_helper"
 require "pry"
 
-describe SexyScopes::ActiveRecord::DynamicMethods do
+describe ArelSugar::ActiveRecord::DynamicMethods do
   before do
     ActiveRecord::Migration.create_table :temp_users do |t|
       t.string :username

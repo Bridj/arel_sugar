@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe SexyScopes::Arel::PredicateMethods do
+describe ArelSugar::Arel::PredicateMethods do
   let(:attribute) { User.arel_attr :score }
   let(:predicate) { attribute < 1000 }
   let(:predicate2) { attribute >= 200 }

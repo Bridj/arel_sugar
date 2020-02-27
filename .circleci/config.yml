@@ -2,7 +2,7 @@ version: 2
 
 jobs:
   test:
-    working_directory: ~/Bridj/sexy_scopes
+    working_directory: ~/Bridj/arel_sugar
     parallelism: 1
     shell: /bin/bash --login
     environment:
@@ -17,7 +17,7 @@ jobs:
       - restore_cache:
           name: Restore bundler cache
           keys:
-            - bundle-cache-v4-{{ checksum "sexy_scopes.gemspec" }}
+            - bundle-cache-v4-{{ checksum "arel_sugar.gemspec" }}
       - run:
           name: Install bundler dependencies
           command: |
@@ -26,7 +26,7 @@ jobs:
             bundle clean
       - save_cache:
           name: Save bundler cache
-          key: bundle-cache-v4-{{ checksum "sexy_scopes.gemspec" }}
+          key: bundle-cache-v4-{{ checksum "arel_sugar.gemspec" }}
           paths:
             - ~/.bundle
             - vendor/bundle

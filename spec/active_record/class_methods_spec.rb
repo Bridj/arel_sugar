@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe SexyScopes::ActiveRecord::ClassMethods do
+describe ArelSugar::ActiveRecord::ClassMethods do
   it "should extend ActiveRecord::Base" do
     expect(ActiveRecord::Base).to be_extended_by described_class
   end
@@ -14,7 +14,7 @@ describe SexyScopes::ActiveRecord::ClassMethods do
       is_expected.to eq User.arel_table[:username]
     end
 
-    it { is_expected.to be_extended_by SexyScopes::Arel::ExpressionMethods }
+    it { is_expected.to be_extended_by ArelSugar::Arel::ExpressionMethods }
   end
 
   describe ".sql_literal(expression)" do
@@ -30,8 +30,8 @@ describe SexyScopes::ActiveRecord::ClassMethods do
       )
     end
 
-    it { is_expected.to be_extended_by SexyScopes::Arel::ExpressionMethods }
+    it { is_expected.to be_extended_by ArelSugar::Arel::ExpressionMethods }
 
-    it { is_expected.to be_extended_by SexyScopes::Arel::PredicateMethods }
+    it { is_expected.to be_extended_by ArelSugar::Arel::PredicateMethods }
   end
 end

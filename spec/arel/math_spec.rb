@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe SexyScopes::Arel::Math do
+describe ArelSugar::Arel::Math do
   let(:attribute) { User.arel_attr :score }
 
   describe "the method `*`" do

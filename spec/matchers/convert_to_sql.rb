@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec::Matchers.define :convert_to_sql do |expected|
-  case SexyScopesSpec.database_system
+  case ArelSugarSpec.database_system
   when "mysql"
     expected = expected.gsub('"', "`")
   when "postgresql"

@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe SexyScopes::ActiveRecord::QueryMethods do
+describe ArelSugar::ActiveRecord::QueryMethods do
   describe ".where(&block)" do
     context "sent to an ActiveRecord::Base class" do
       subject { User }
@@ -47,7 +47,7 @@ describe SexyScopes::ActiveRecord::QueryMethods do
 
       it "should use the returned expression as conditions" do
         relation = subject.where { body =~ "%alice%" }
-        if SexyScopes.arel_9?
+        if ArelSugar.arel_9?
           expect(relation).to convert_to_sql <<-SQL.strip
             SELECT "messages".* FROM "messages" WHERE "messages"."author_id" = #{@bob.id} AND "messages"."body" LIKE '%alice%'
           SQL
@@ -98,7 +98,7 @@ describe SexyScopes::ActiveRecord::QueryMethods do
 
       it "should use the returned expression as conditions" do
         relation = subject.where.not { score == 5 }
-        if SexyScopes.arel_9?
+        if ArelSugar.arel_9?
           expect(relation).to convert_to_sql(
             %{SELECT "users".* FROM "users" WHERE NOT ("users"."score" = 5)}
           )
@@ -119,7 +119,7 @@ describe SexyScopes::ActiveRecord::QueryMethods do
 
       it "should use the returned expression as conditions" do
         relation = subject.where.not { score == 5 }
-        if SexyScopes.arel_9?
+        if ArelSugar.arel_9?
           expect(relation).to convert_to_sql(
             %{SELECT 1 FROM "users" WHERE NOT ("users"."score" = 5)}
           )
@@ -144,7 +144,7 @@ describe SexyScopes::ActiveRecord::QueryMethods do
 
       it "should use the returned expression as conditions" do
         relation = subject.where.not { body =~ "%alice%" }
-        if SexyScopes.arel_9?
+        if ArelSugar.arel_9?
           expect(relation).to convert_to_sql <<-SQL.strip
             SELECT "messages".* FROM "messages" WHERE "messages"."author_id" = #{@bob.id} AND NOT ("messages"."body" LIKE '%alice%')
           SQL

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module SexyScopes
+module ArelSugar
   module ActiveRecord
     module DynamicMethods
       private
@@ -8,10 +8,10 @@ module SexyScopes
       def respond_to_missing?(method_name, *)
         # super currently resolve to Object#respond_to_missing? which return false,
         # but future version of ActiveRecord::Base might implement respond_to_missing?
-        if @sexy_scopes_attribute_methods_generated
+        if @arel_sugar_attribute_methods_generated
           super
         else
-          sexy_scopes_has_attribute?(method_name)
+          arel_sugar_has_attribute?(method_name)
         end
       end
 
@@ -44,28 +44,28 @@ module SexyScopes
       #   User.arel_attr(:name)
       #
       def method_missing(name, *args, &block)
-        if @sexy_scopes_attribute_methods_generated
+        if @arel_sugar_attribute_methods_generated
           super
         else
-          sexy_scopes_define_attribute_methods
+          arel_sugar_define_attribute_methods
           send(name, *args, &block)
         end
       end
 
-      def sexy_scopes_define_attribute_methods
-        @sexy_scopes_attribute_methods_generated = true
-        return unless sexy_scopes_is_table?
+      def arel_sugar_define_attribute_methods
+        @arel_sugar_attribute_methods_generated = true
+        return unless arel_sugar_is_table?
 
         column_names.each do |name|
           define_singleton_method(name) { arel_attr(name) } unless respond_to?(name, true)
         end
       end
 
-      def sexy_scopes_has_attribute?(attribute_name)
-        sexy_scopes_is_table? && column_names.include?(attribute_name.to_s)
+      def arel_sugar_has_attribute?(attribute_name)
+        arel_sugar_is_table? && column_names.include?(attribute_name.to_s)
       end
 
-      def sexy_scopes_is_table?
+      def arel_sugar_is_table?
         !(equal?(::ActiveRecord::Base) || abstract_class?) && table_exists?
       end
     end

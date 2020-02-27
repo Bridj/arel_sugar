@@ -1,25 +1,17 @@
-**WARNING: UNMAINTAINED AT THE MOMENT, SORRY :(**
-
-SexyScopes
+ArelSugar
 ==========
-
-[![Gem Version](http://img.shields.io/gem/v/sexy_scopes.svg?style=flat)](https://rubygems.org/gems/sexy_scopes)
-[![Dependencies](https://img.shields.io/gemnasium/samleb/sexy_scopes.svg?style=flat)](https://gemnasium.com/samleb/sexy_scopes)
-[![Code Climate](https://img.shields.io/codeclimate/github/samleb/sexy_scopes.svg?style=flat)](https://codeclimate.com/github/samleb/sexy_scopes)
-[![Build Status](https://img.shields.io/travis/samleb/sexy_scopes.svg?style=flat)](https://travis-ci.org/samleb/sexy_scopes)
-[![Coverage Status](https://img.shields.io/coveralls/samleb/sexy_scopes.svg?style=flat)](https://coveralls.io/r/samleb/sexy_scopes)
 
 **Write beautiful and expressive ActiveRecord scopes without SQL**
 
-SexyScopes is a gem that adds syntactic sugar for creating ActiveRecord scopes
+ArelSugar is a gem that adds syntactic sugar for creating ActiveRecord scopes
 in Ruby instead of SQL.
 This allows for more expressive, less error-prone and database independent conditions.
 
 **WARNING**: This gem requires Ruby >= 2.0.0 and ActiveRecord >= 4.2
 
-* [Source Code](https://github.com/samleb/sexy_scopes)
-* [Rubygem](http://rubygems.org/gems/sexy_scopes)
-* [API Documentation](http://rubydoc.info/gems/sexy_scopes)
+* [Source Code](https://github.com/bridj/arel_sugar)
+* [Rubygem](http://rubygems.org/gems/arel_sugar)
+* [API Documentation](http://rubydoc.info/gems/arel_sugar)
 
 Usage & Examples
 ----------------
@@ -42,7 +34,7 @@ scope :visible, -> { where('category IS NOT NULL AND draft = ? AND price > 0', f
 
 Hum, lots of *SQL*, not very *Ruby*-esque...
 
-**With SexyScopes**
+**With ArelSugar**
 
 ```ruby
 scope :visible, -> { where((category != nil) & (draft == false) & (price > 0)) }
@@ -75,7 +67,7 @@ end
 
 Now let's find posts having comments with a rating greater than a given rating in a controller action:
 
-**Without SexyScopes**
+**Without ArelSugar**
 
 ```ruby
 @posts = Post.joins(:comments).where('rating > ?', params[:rating])
@@ -93,7 +85,7 @@ Because both `Post` and `Comment` have a `rating` column, you have to give the t
 @posts = Post.joins(:comments).where('comments.rating > ?', params[:rating])
 ```
 
-**With SexyScopes**
+**With ArelSugar**
 
 Since `Comment.rating` represents the `rating` column of the `Comment` model, the above can be rewritten as such:
 
@@ -108,7 +100,7 @@ Installation
 
 Add this line to your application's Gemfile:
 
-    gem 'sexy_scopes'
+    gem 'arel_sugar'
 
 And then execute:
 
@@ -116,21 +108,21 @@ And then execute:
 
 Or install it yourself as:
 
-    gem install sexy_scopes
+    gem install arel_sugar
 
 Then require it in your application code:
 
-    require 'sexy_scopes'
+    require 'arel_sugar'
 
 How does it work ?
 ------------------
 
-SexyScopes is essentially a wrapper around [Arel](https://github.com/rails/arel#readme) attribute nodes.
+ArelSugar is essentially a wrapper around [Arel](https://github.com/rails/arel#readme) attribute nodes.
 
 It introduces a `ActiveRecord::Base.arel_attr(name)` class method returning an `Arel::Attribute` object, which
 represent a table column with the given name, that is extended to support Ruby operators.
 
-For convenience, SexyScopes dynamically resolves methods whose name is an existing table column: i.e.
+For convenience, ArelSugar dynamically resolves methods whose name is an existing table column: i.e.
 `Product.price` is a shortcut for `Product.arel_attr(:price)`.
 
 Please note that this mechanism won't override any of the existing `ActiveRecord::Base` class methods,
@@ -157,7 +149,7 @@ Here is a complete list of operators, and their `Arel::Attribute` equivalents:
 Block syntax
 ------------
 
-SexyScopes introduces a new block syntax for the `where` clause, which can be used in 2 different forms:
+ArelSugar introduces a new block syntax for the `where` clause, which can be used in 2 different forms:
 
 * With no argument, the block is evaluated in the context of the relation
 
@@ -200,7 +192,7 @@ databases implementations.
 Let's say you're using SQLite3 in development, and PostgreSQL in testing/production, well that's quite a good reason
 not to use database-specific code, isn't it?
 
-Once again, SexyScopes comes to the rescue:
+Once again, ArelSugar comes to the rescue:
 The `=~` and `!~` operators when called with a regular expression will generate the SQL you don't want to know about.
 
 ```ruby
@@ -282,6 +274,6 @@ If you want to contribute, please follow the steps described in [CONTRIBUTING.md
 Copyright
 ---------
 
-SexyScopes is released under the [MIT License](http://www.opensource.org/licenses/MIT).
+ArelSugar is released under the [MIT License](http://www.opensource.org/licenses/MIT).
 
 Copyright (c) 2010-2017 Samuel Lebeau, See LICENSE for details.

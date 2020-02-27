@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module SexyScopes
+module ArelSugar
   module ActiveRecord
     module ClassMethods
       # Creates and extends an Arel <tt>Attribute</tt> representing the table's column with
@@ -14,7 +14,7 @@ module SexyScopes
       #   where arel_attr(:score) > 1000
       #
       def arel_attr(name)
-        SexyScopes.extend_expression(arel_table[name])
+        ArelSugar.extend_expression(arel_table[name])
       end
 
       # Creates and extends an Arel <tt>SqlLiteral</tt> instance for the given <tt>expression</tt>,
@@ -27,8 +27,8 @@ module SexyScopes
       #
       def sql_literal(expression)
         ::Arel.sql(expression.to_s).tap do |literal|
-          SexyScopes.extend_expression(literal)
-          SexyScopes.extend_predicate(literal)
+          ArelSugar.extend_expression(literal)
+          ArelSugar.extend_predicate(literal)
         end
       end
       alias sql sql_literal

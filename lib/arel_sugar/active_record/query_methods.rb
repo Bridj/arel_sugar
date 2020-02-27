@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module SexyScopes
+module ArelSugar
   module ActiveRecord
     module QueryMethods
       # Adds support for blocks to ActiveRecord `where`.
@@ -27,7 +27,7 @@ module SexyScopes
       #
       def where(*args, &block)
         if block
-          super(sexy_scopes_build_conditions_from_block(args, block))
+          super(arel_sugar_build_conditions_from_block(args, block))
         else
           super
         end
@@ -35,7 +35,7 @@ module SexyScopes
 
       protected
 
-      def sexy_scopes_build_conditions_from_block(args, block)
+      def arel_sugar_build_conditions_from_block(args, block)
         raise ArgumentError, "You can't use both arguments and a block" if args.any?
 
         if block.arity.zero?
@@ -57,7 +57,7 @@ module SexyScopes
         #
         def not(*args, &block)
           if block
-            conditions = @scope.send(:sexy_scopes_build_conditions_from_block, args, block)
+            conditions = @scope.send(:arel_sugar_build_conditions_from_block, args, block)
             @scope.where(conditions.not)
           else
             super

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module SexyScopesSpec
+module ArelSugarSpec
   extend self
 
   CONFIG_FILENAME = "config.yml"

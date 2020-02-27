@@ -1,13 +1,12 @@
 # frozen_string_literal: true
 
-module SexyScopes
+module ArelSugar
   module Version
     MAJOR = 1
     MINOR = 0
     TINY  = 0
-    PRE = "beta1"
 
-    STRING = [MAJOR, MINOR, TINY, PRE].compact.join(".")
+    STRING = [MAJOR, MINOR, TINY].compact.join(".")
 
     class << self
       # Allows {Version} to display ({to_s}) and behave ({to_str}) as a string

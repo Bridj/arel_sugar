@@ -9,7 +9,7 @@ module Arel
       private
 
       def visit_Regexp(regexp, collector)
-        source = SexyScopes.quote(regexp.source)
+        source = ArelSugar.quote(regexp.source)
         visit source, collector
       end
     end
@@ -17,9 +17,9 @@ module Arel
     class MySQL
       private
 
-      def visit_SexyScopes_Arel_Nodes_RegexpMatches(o, collector)
+      def visit_ArelSugar_Arel_Nodes_RegexpMatches(o, collector)
         regexp = o.right
-        right = SexyScopes.quote(regexp.source)
+        right = ArelSugar.quote(regexp.source)
         right = Arel::Nodes::Bin.new(right) unless regexp.casefold?
         visit o.left, collector
         collector << " REGEXP "
@@ -30,10 +30,10 @@ module Arel
     class PostgreSQL
       private
 
-      def visit_SexyScopes_Arel_Nodes_RegexpMatches(o, collector)
+      def visit_ArelSugar_Arel_Nodes_RegexpMatches(o, collector)
         regexp = o.right
         operator = regexp.casefold? ? "~*" : "~"
-        right = SexyScopes.quote(regexp.source)
+        right = ArelSugar.quote(regexp.source)
         visit o.left, collector
         collector << SPACE << operator << SPACE
         visit right, collector
@@ -43,7 +43,7 @@ module Arel
     class Oracle
       private
 
-      def visit_SexyScopes_Arel_Nodes_RegexpMatches(o, collector)
+      def visit_ArelSugar_Arel_Nodes_RegexpMatches(o, collector)
         regexp = o.right
         flags = regexp.casefold? ? "i" : "c"
         flags << "m" if regexp.options & Regexp::MULTILINE == Regexp::MULTILINE

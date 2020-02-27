@@ -8,7 +8,7 @@ Layout/HashAlignment:
 Layout/LineLength:
   Max: 100
   Exclude:
-    - sexy_scopes.gemspec
+    - arel_sugar.gemspec
 
 Layout/SpaceInsideArrayLiteralBrackets:
   Exclude:
@@ -38,7 +38,7 @@ Naming/MethodParameterName:
 
 Naming/VariableNumber:
   Exclude:
-    - lib/sexy_scopes.rb
+    - lib/arel_sugar.rb
 
 Style/BlockDelimiters:
   IgnoredMethods: expect, where, not
