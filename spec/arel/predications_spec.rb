@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe SexyScopes::Arel::Predications do
+describe ArelSugar::Arel::Predications do
   let(:attribute) { User.arel_attr attr_name }
   let(:attr_name) { :score }
 
@@ -67,7 +67,7 @@ describe SexyScopes::Arel::Predications do
 
       it_behaves_like "a predicate method"
 
-      it { is_expected.to be_a SexyScopes::Arel::Nodes::RegexpMatches }
+      it { is_expected.to be_a ArelSugar::Arel::Nodes::RegexpMatches }
     end
 
     describe "the method `does_not_match_regexp`" do
@@ -77,8 +77,8 @@ describe SexyScopes::Arel::Predications do
 
       it { is_expected.to be_a Arel::Nodes::Not }
 
-      it "should be the negation of an SexyScopes::Arel::Nodes::RegexpMatches" do
-        expect(subject.expr).to be_a SexyScopes::Arel::Nodes::RegexpMatches
+      it "should be the negation of an ArelSugar::Arel::Nodes::RegexpMatches" do
+        expect(subject.expr).to be_a ArelSugar::Arel::Nodes::RegexpMatches
       end
     end
 

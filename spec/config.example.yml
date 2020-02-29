@@ -4,11 +4,11 @@ sqlite3:
 
 mysql:
   adapter: <%= jruby? ? 'jdbcmysql' : 'mysql2' %>
-  database: sexy_scopes_spec
+  database: arel_sugar_spec
 
 postgresql:
   adapter: <%= jruby? ? 'jdbcpostgresql' : 'postgresql' %>
-  database: sexy_scopes_spec
+  database: arel_sugar_spec
   min_messages: warning
 
 # TODO: Add oracle configuration

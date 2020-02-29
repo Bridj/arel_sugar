@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 require "active_support/lazy_load_hooks"
-require "sexy_scopes/version"
+require "arel_sugar/version"
 
-module SexyScopes
-  autoload :Arel, "sexy_scopes/arel"
+module ArelSugar
+  autoload :Arel, "arel_sugar/arel"
 
   class << self
     def extend_expression(expression)
@@ -28,9 +28,9 @@ module SexyScopes
 end
 
 if defined? Rails::Railtie
-  require "sexy_scopes/railtie"
+  require "arel_sugar/railtie"
 else
   ActiveSupport.on_load :active_record do
-    require "sexy_scopes/active_record"
+    require "arel_sugar/active_record"
   end
 end

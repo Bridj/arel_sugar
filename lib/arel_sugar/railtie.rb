@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-module SexyScopes
+module ArelSugar
   class Railtie < Rails::Railtie
-    initializer "sexy_scopes" do
+    initializer "arel_sugar" do
       ActiveSupport.on_load :active_record do
-        require "sexy_scopes/active_record"
+        require "arel_sugar/active_record"
       end
     end
   end

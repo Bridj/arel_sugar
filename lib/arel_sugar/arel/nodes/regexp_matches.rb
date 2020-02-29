@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module SexyScopes
+module ArelSugar
   module Arel
     module Nodes
       class RegexpMatches < ::Arel::Nodes::InfixOperation

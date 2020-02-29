@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module SexyScopes
+module ArelSugar
   module Arel
     module PredicateMethods
       # <tt>Arel::Grouping</tt> nodes didn't include <tt>Arel::Predications</tt> before Arel 3,
@@ -10,17 +10,17 @@ module SexyScopes
       include ::Arel::Predications
 
       def not
-        SexyScopes.extend_predicate(super)
+        ArelSugar.extend_predicate(super)
       end
       alias ~ not
 
       def or(other)
-        SexyScopes.extend_predicate(super)
+        ArelSugar.extend_predicate(super)
       end
       alias | or
 
       def and(other)
-        SexyScopes.extend_predicate(super)
+        ArelSugar.extend_predicate(super)
       end
       alias & and
     end

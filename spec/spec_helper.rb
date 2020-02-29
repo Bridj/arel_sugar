@@ -17,7 +17,7 @@ end
 
 require "rspec"
 require "active_record"
-require "sexy_scopes"
+require "arel_sugar"
 
 Dir.glob(File.join(File.dirname(__FILE__), "{support,fixtures,matchers}", "*")) do |file|
   require file

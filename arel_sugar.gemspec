@@ -1,17 +1,17 @@
 # frozen_string_literal: true
 
-require File.expand_path("lib/sexy_scopes/version", __dir__)
+require File.expand_path("lib/arel_sugar/version", __dir__)
 
 Gem::Specification.new do |gem|
-  gem.name          = "sexy_scopes"
-  gem.version       = SexyScopes::VERSION
+  gem.name          = "arel_sugar"
+  gem.version       = ArelSugar::VERSION
 
   gem.summary = %(Write beautiful and expressive ActiveRecord scopes without SQL.)
-  gem.description = %{Small DSL to create ActiveRecord (>= 3.1) attribute predicates without writing SQL.}
+  gem.description = %{Small DSL to create ActiveRecord (>= 5.0) attribute predicates without writing SQL.}
 
   gem.authors       = ["Samuel Lebeau", "Paul Bernays"]
-  gem.email         = "samuel.lebeau@gmail.com"
-  gem.homepage      = "https://github.com/bridj/sexy_scopes"
+  gem.email         = ["samuel.lebeau@gmail.com", "pbernays@bridj.com"]
+  gem.homepage      = "https://github.com/bridj/arel_sugar"
 
   gem.files         = Dir["*.md", "LICENSE", "lib/**/*.rb"]
 

@@ -32,7 +32,7 @@ Contributing
 
 ### Working with GitHub
 
-Report bugs or suggest features using [GitHub issues](https://github.com/samleb/sexy_scopes).
+Report bugs or suggest features using [GitHub issues](https://github.com/bridj/arel_sugar).
 
 1. Fork it
 2. Create your feature branch (`git checkout -b my-new-feature`)

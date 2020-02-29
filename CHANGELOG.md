@@ -1,6 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## 1.0.0 - 2020-02-27
+
+### Fixed
+- Renamed project to ArelSugar
+- Renamed .attribute to .arel_attr so as not to clobber the Rails 5 Attribute API
+
 ## 1.0.0.beta1 - 2017-09-17
 
 ### Added
